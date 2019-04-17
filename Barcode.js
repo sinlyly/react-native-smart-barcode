@@ -7,7 +7,6 @@
 
 
 import React, {
-    PropTypes,
     Component,
 } from 'react'
 import {
@@ -17,33 +16,11 @@ import {
     AppState,
     Platform,
 } from 'react-native'
+import PropTypes from 'prop-types'
 
 const BarcodeManager = Platform.OS == 'ios' ? NativeModules.Barcode : NativeModules.CaptureModule
 
-
 export default class Barcode extends Component {
-
-    static defaultProps = {
-        barCodeTypes: Object.values(BarcodeManager.barCodeTypes),
-        scannerRectWidth: 255,
-        scannerRectHeight: 255,
-        scannerRectTop: 0,
-        scannerRectLeft: 0,
-        scannerLineInterval: 3000,
-        scannerRectCornerColor: `#09BB0D`,
-    }
-
-    static propTypes = {
-        ...View.propTypes,
-        onBarCodeRead: PropTypes.func.isRequired,
-        barCodeTypes: PropTypes.array,
-        scannerRectWidth: PropTypes.number,
-        scannerRectHeight: PropTypes.number,
-        scannerRectTop: PropTypes.number,
-        scannerRectLeft: PropTypes.number,
-        scannerLineInterval: PropTypes.number,
-        scannerRectCornerColor: PropTypes.string,
-    }
 
     render() {
         return (
@@ -69,13 +46,35 @@ export default class Barcode extends Component {
     }
 
     _handleAppStateChange = (currentAppState) => {
-        if(currentAppState !== 'active' ) {
+        if (currentAppState !== 'active') {
             this.stopScan()
         }
         else {
             this.startScan()
         }
     }
+}
+
+Barcode.defaultProps = {
+    barCodeTypes: Object.values(BarcodeManager.barCodeTypes),
+    scannerRectWidth: 255,
+    scannerRectHeight: 255,
+    scannerRectTop: 0,
+    scannerRectLeft: 0,
+    scannerLineInterval: 3000,
+    scannerRectCornerColor: `#09BB0D`,
+}
+
+Barcode.propTypes = {
+    ...View.propTypes,
+    onBarCodeRead: PropTypes.func.isRequired,
+    barCodeTypes: PropTypes.array,
+    scannerRectWidth: PropTypes.number,
+    scannerRectHeight: PropTypes.number,
+    scannerRectTop: PropTypes.number,
+    scannerRectLeft: PropTypes.number,
+    scannerLineInterval: PropTypes.number,
+    scannerRectCornerColor: PropTypes.string,
 }
 
 const NativeBarCode = requireNativeComponent(Platform.OS == 'ios' ? 'RCTBarcode' : 'CaptureView', Barcode)
