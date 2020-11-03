@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.author       = package['author']
   s.platform     = :ios, "8.0"
   s.source                 = { :git => 'https://github.com/sinlyly/react-native-smart-barcode.git', :tag => s.version }
-  s.source_files  = "ios/**/**/*.{h,m}"
+  s.source_files  = "ios/**/*.{h,m}"
   s.requires_arc = true
 
   s.dependency 'React'
